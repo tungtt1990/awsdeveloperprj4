@@ -1,8 +1,6 @@
 import Axios from 'axios'
 
 export async function getTodos(idToken) {
-  console.log('Fetching todos')
-
   const response = await Axios.get(
     `${process.env.REACT_APP_API_ENDPOINT}/todos`,
     {
@@ -12,8 +10,7 @@ export async function getTodos(idToken) {
       }
     }
   )
-  console.log('Todos:', response.data)
-  return response.data.items
+  return response?.data.items
 }
 
 export async function createTodo(idToken, newTodo) {
@@ -27,7 +24,7 @@ export async function createTodo(idToken, newTodo) {
       }
     }
   )
-  return response.data.item
+  return response?.data.item
 }
 
 export async function patchTodo(idToken, todoId, updatedTodo) {
@@ -63,7 +60,7 @@ export async function getUploadUrl(idToken, todoId) {
       }
     }
   )
-  return response.data.uploadUrl
+  return response?.data.uploadUrl
 }
 
 export async function uploadFile(uploadUrl, file) {

@@ -89,7 +89,7 @@ export class TodosAccess {
     return result;
   }
 
-  async updateAttachmentUrl(userId, todoId, attachmentUrl) {
+  async updateAttachmentUrl(userId, todoId, bucketName) {
     logger.info(
       `Updating attachment URL for todo with id: ${todoId} in ${this.todosTable}`
     )
@@ -103,7 +103,7 @@ export class TodosAccess {
       },
       UpdateExpression: 'set attachmentUrl = :attachmentUrl',
       ExpressionAttributeValues: {
-        ':attachmentUrl': attachmentUrl
+        ':attachmentUrl': `https://${bucketName}.s3.amazonaws.com/${todoId}`
       }
     })
     .promise();

@@ -49,6 +49,6 @@ export async function generateUploadUrl(todoId, userId) {
         Key: todoId,
         Expires: 300
     });
-    await todosAccess.updateAttachmentUrl(userId, todoId, signedUrl);
+    await todosAccess.updateAttachmentUrl(userId, todoId, bucketName);
     return signedUrl;
 }

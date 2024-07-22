@@ -106,7 +106,6 @@ export function Todos() {
         })
       )
     } catch (e) {
-      console.log('Failed to check a TODO', e)
       alert('Todo deletion failed')
     }
   }
@@ -115,15 +114,10 @@ export function Todos() {
     navigate(`/todos/${todoId}/edit`)
   }
 
-  const { user, getAccessTokenSilently } = useAuth0()
+  const { getAccessTokenSilently } = useAuth0()
   const [todos, setTodos] = useState([])
   const [loadingTodos, setLoadingTodos] = useState(true)
   const navigate = useNavigate()
-
-  console.log('User', {
-    name: user.name,
-    email: user.email
-  })
 
   useEffect(() => {
     async function foo() {
@@ -132,7 +126,6 @@ export function Todos() {
           audience: `https://${domain}/api/v2/`,
           scope: 'write:todos'
         })
-        console.log('Access token: ' + accessToken)
         const todos = await getTodos(accessToken)
         setTodos(todos)
         setLoadingTodos(false)
@@ -149,7 +142,7 @@ export function Todos() {
 
       <NewTodoInput onNewTodo={(newTodo) => setTodos([...todos, newTodo])} />
 
-      {renderTodos(loadingTodos, todos)}
+      { renderTodos(loadingTodos, todos) }
     </div>
   )
 }

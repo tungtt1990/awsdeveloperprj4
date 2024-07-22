@@ -8,7 +8,6 @@ const jwksUrl = 'https://dev-nnyimiagx34ms1be.us.auth0.com/.well-known/jwks.json
 export async function handler(event) {
   try {
     const jwtToken = await verifyToken(event.authorizationToken)
-    console.log('jwtToken', jwtToken);
     return {
       principalId: jwtToken.sub,
       policyDocument: {
@@ -46,9 +45,8 @@ async function verifyToken(authHeader) {
   const token = getToken(authHeader)
   const jwt = jsonwebtoken.decode(token, { complete: true })
 
-  // TODO: Implement token verification
   const response = await Axios.get(jwksUrl)
-  const keys = response.data.keys
+  const keys = response?.data.keys
   const signingKeys = keys.find(key => key.kid === jwt.header.kid)
   logger.info('Signing Keys', signingKeys)
 
